@@ -15,7 +15,7 @@ struct timeval mytimeval;
 
 struct shared_dat
 {
-        int value; /* shared variable to store result*/
+        int value; /* shared variable to store result */
 };
 
 struct shared_dat *counter;
@@ -23,25 +23,42 @@ int getpid();
 int temp;
 pthread_mutex_t mutex;
 int mytot = 0, jumps = 0;
+int flag = 1;
 
 /****************************************************************
 * This function increases the value of shared variable "counter"
   by one 3000000 times
 ****************************************************************/
-void *thread1(void *arg)
+void *
+thread1(void *arg)
 {
         int line = 0;
+
         while (line < 3000000)
         {
-                line++;
+                if (flag == 0)
+                {
+                        if (pthread_mutex_trylock(&mutex))
+                        {
+                                line++;
 
-                counter->value = counter->value + 1;
-                counter->value = counter->value * 2;
-                counter->value = counter->value / 2;
+                                if ((counter->value % 100) == 0)
+                                {
+                                        counter->value += 100;
+                                        jumps++;
+                                }
+
+                                mytot += 1;
+                                flag = 1;
+                                pthread_mutex_unlock(&mutex);
+                        }
+                }
         }
+
         // Ignore if you like.  Your counter value is the shared variable
         // when done.  mytot should be 3,000,000.  Jumps is 0 to 30,0000.
-        printf("from process1 counter  =  %d, mytot %d, jumps %d \n", counter->value, mytot, jumps);
+        printf("from process1 counter  =  %d, mytot %d, jumps %d \n",
+               counter->value, mytot, jumps);
         return (NULL);
 }
 
@@ -49,20 +66,33 @@ void *thread1(void *arg)
 This function increases the value of shared variable "counter"
 by one 3000000 times
 ****************************************************************/
-void *thread2(void *arg)
+void *
+thread2(void *arg)
 {
         int line = 0;
         int count;
+
         while (line < 3000000)
         {
-                line++;
+                if (flag == 1)
+                {
+                        if (pthread_mutex_trylock(&mutex))
+                        {
+                                line++;
 
-                count = 0;
-                /* Critical Section */
-                counter->value = counter->value + 1;
-                counter->value = counter->value * 2;
-                counter->value = counter->value / 2;
+                                count = 0;
+
+                                /* Critical Section */
+                                counter->value = counter->value + 1;
+                                counter->value = counter->value * 2;
+                                counter->value = counter->value / 2;
+                                //   printf("Thread 2 %d \n", counter->value);
+                                flag = 0;
+                                pthread_mutex_unlock(&mutex);
+                        }
+                }
         }
+
         printf("from process2 counter = %d\n", counter->value);
         return (NULL);
 }
@@ -88,7 +118,7 @@ int main()
 
         fflush(stdout);
         /* Required to schedule thread independently.
-        Otherwise use NULL in place of attr. */
+           Otherwise use NULL in place of attr. */
         pthread_attr_init(&attr[0]);
         pthread_attr_setscope(&attr[0], PTHREAD_SCOPE_SYSTEM); /* system-wide contention */
 
