@@ -28,14 +28,15 @@ def load_saved_artifacts():
     global  __data_columns
     global __locations
 
-    with open(os.path.join(os.path.dirname( __file__ ), 'artifacts', 'columns.json'), "r") as f:
+    # os.path.join(os.path.dirname( __file__ ), 'artifacts', 'columns.json')
+    with open('columns.json', "r") as f:
         __data_columns = json.load(f)['data_columns']
         __locations = __data_columns[3:]  # first 3 columns are sqft, bath, bhk
 
     global __model
     if __model is None:
 
-        with open(os.path.join(os.path.dirname( __file__ ), 'artifacts', 'banglore_home_prices_model.pickle'), 'rb') as f:
+        with open('banglore_home_prices_model.pickle', 'rb') as f:
             __model = pickle.load(f)
     print("loading saved artifacts...done")
 

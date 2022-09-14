@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-import backend.util as util
+import util
 
 app = Flask(__name__)
 
