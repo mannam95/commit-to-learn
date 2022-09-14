@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-import util
+import backend.util as util
 
 app = Flask(__name__)
 
@@ -11,8 +11,7 @@ def home():
 @app.route('/get_location_names', methods=['GET'])
 def get_location_names():
     response = jsonify({
-        'locations': util.get_location_names(),
-        'json_path': util.get_json_path()
+        'locations': util.get_location_names()
     })
     response.headers.add('Access-Control-Allow-Origin', '*')
 

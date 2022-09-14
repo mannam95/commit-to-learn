@@ -4,8 +4,8 @@ import json
 import numpy as np
 
 
-__json_file_path = Path('columns.json').resolve()
-__pkl_file_path = Path('banglore_home_prices_model.pickle').resolve()
+__json_file_path = Path('backend/artifacts/columns.json').resolve()
+__pkl_file_path = Path('backend/artifacts/banglore_home_prices_model.pickle').resolve()
 
 
 def get_estimated_price(location,sqft,bhk,bath):
@@ -40,7 +40,7 @@ def get_location_names():
         f_json.close()
         return locations
     except:
-        return ['nothing_n1']
+        return ['empty_list']
     
 
 def get_data_columns():
@@ -48,13 +48,3 @@ def get_data_columns():
     data_columns = json.load(f_json)['data_columns']
     f_json.close()
     return data_columns
-
-def get_json_path():
-    return str(__json_file_path)
-
-if __name__ == '__main__':
-    print(get_location_names())
-    print(get_estimated_price('1st Phase JP Nagar',1000, 3, 3))
-    print(get_estimated_price('1st Phase JP Nagar', 1000, 2, 2))
-    print(get_estimated_price('Kalhalli', 1000, 2, 2)) # other location
-    print(get_estimated_price('Ejipura', 1000, 2, 2))  # other location
