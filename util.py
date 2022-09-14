@@ -6,6 +6,7 @@ import os
 __locations = None
 __data_columns = None
 __model = None
+__json_file_path =  os.path.join(os.path.dirname( __file__ ), 'columns.json')
 
 def get_estimated_price(location,sqft,bhk,bath):
     try:
@@ -28,17 +29,10 @@ def load_saved_artifacts():
     global  __data_columns
     global __locations
 
-    json_file_path =  os.path.join(os.path.dirname( __file__ ), 'columns.json')
-
-    # print(json_file_path)
-
-    f_json = open(json_file_path)
+    f_json = open(__json_file_path)
     __data_columns = json.load(f_json)['data_columns']
     __locations = __data_columns[3:]  # first 3 columns are sqft, bath, bhk
     f_json.close()
-
-    if __locations == None:
-        __locations = json_file_path
 
     global __model
     if __model is None:
@@ -55,6 +49,9 @@ def get_location_names():
 
 def get_data_columns():
     return __data_columns
+
+def get_json_path():
+    return __json_file_path
 
 if __name__ == '__main__':
     load_saved_artifacts()
