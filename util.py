@@ -1,3 +1,4 @@
+from pathlib import Path
 import pickle
 import json
 import numpy as np
@@ -6,7 +7,9 @@ import os
 __locations = None
 __data_columns = None
 __model = None
-__json_file_path =  os.path.join(os.path.dirname( __file__ ), 'columns.json')
+__json_file_path = Path('columns.json').resolve()
+__pkl_file_path = Path('banglore_home_prices_model.pickle').resolve()
+
 
 def get_estimated_price(location,sqft,bhk,bath):
     try:
@@ -37,21 +40,20 @@ def load_saved_artifacts():
     global __model
     if __model is None:
 
-        f_pkl = open('banglore_home_prices_model.pickle','rb')
+        f_pkl = open(__pkl_file_path,'rb')
         __model = pickle.load(f_pkl)
         f_pkl.close()
 
     print("loading saved artifacts...done")
 
 def get_location_names():
-    # print("Locations at api call: ", __locations)
     return __locations
 
 def get_data_columns():
     return __data_columns
 
 def get_json_path():
-    return __json_file_path
+    return str(__json_file_path)
 
 if __name__ == '__main__':
     load_saved_artifacts()
