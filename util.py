@@ -28,22 +28,29 @@ def load_saved_artifacts():
     global  __data_columns
     global __locations
 
-    # os.path.join(os.path.dirname( __file__ ), 'artifacts', 'columns.json')
-    with open('columns.json', "r") as f:
-        __data_columns = json.load(f)['data_columns']
-        __locations = __data_columns[3:]  # first 3 columns are sqft, bath, bhk
+    json_file_path =  os.path.join(os.path.dirname( __file__ ), 'columns.json')
 
-    print("Locations at begining: ", __locations)
+    # print(json_file_path)
+
+    f_json = open(json_file_path)
+    __data_columns = json.load(f_json)['data_columns']
+    __locations = __data_columns[3:]  # first 3 columns are sqft, bath, bhk
+    f_json.close()
+
+    if __locations == None:
+        __locations = json_file_path
 
     global __model
     if __model is None:
 
-        with open('banglore_home_prices_model.pickle', 'rb') as f:
-            __model = pickle.load(f)
+        f_pkl = open('banglore_home_prices_model.pickle','rb')
+        __model = pickle.load(f_pkl)
+        f_pkl.close()
+
     print("loading saved artifacts...done")
 
 def get_location_names():
-    print("Locations at api call: ", __locations)
+    # print("Locations at api call: ", __locations)
     return __locations
 
 def get_data_columns():
