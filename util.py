@@ -47,7 +47,14 @@ def load_saved_artifacts():
     print("loading saved artifacts...done")
 
 def get_location_names():
-    return __locations
+    try:
+        f_json = open(__json_file_path)
+        data_columns = json.load(f_json)['data_columns']
+        locations = data_columns[3:]  # first 3 columns are sqft, bath, bhk
+        return locations
+    except:
+        return ['nothing_n1']
+    
 
 def get_data_columns():
     return __data_columns
