@@ -47,3 +47,11 @@ resource "aws_lambda_function" "my_lambda_function" {
     ignore_changes = [filename]
   }
 }
+
+output "my_lambda_function_name" {
+  value = aws_lambda_function.my_lambda_function.function_name
+}
+
+output "my_lambda_function_arn" {
+  value = aws_lambda_function.my_lambda_function.invoke_arn
+}
