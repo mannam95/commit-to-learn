@@ -67,3 +67,7 @@ resource "aws_appautoscaling_policy" "dynamodb_table_write_policy" {
     target_value = 60.0
   }
 }
+
+output "basic_dynamodb_table_arn" {
+  value = aws_dynamodb_table.basic-dynamodb-table.arn
+}
