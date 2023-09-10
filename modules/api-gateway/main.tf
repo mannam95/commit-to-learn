@@ -38,6 +38,6 @@ resource "aws_api_gateway_deployment" "gateway_deployment" {
     aws_api_gateway_integration.lambda,
   ]
 
-  rest_api_id = "${aws_api_gateway_rest_api.sample_api.id}"
-  stage_name  = "dev"
+  rest_api_id = aws_api_gateway_rest_api.sample_api.id
+  stage_name  = var.my_api_gateway_stage_name
 }
