@@ -38,3 +38,6 @@ secrets.tf
 
 # the below files are used for testing purposes only
 dummy.zip
+
+# Do not ig nore the below file
+!override.template.tfvars
