@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda_execution_role" {
-  name = "lambda-execution-role"
+  name = var.lambda_execution_role_name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -38,7 +38,7 @@ resource "aws_iam_policy_attachment" "lambda_dynamodb_policy_attachment" {
 }
 
 resource "aws_lambda_function" "my_lambda_function" {
-  function_name = "my-lambda-function"
+  function_name = var.lambda_function_name
   role         = aws_iam_role.lambda_execution_role.arn
   handler      = "index.handler"
   runtime      = "nodejs16.x"
@@ -52,6 +52,6 @@ output "my_lambda_function_name" {
   value = aws_lambda_function.my_lambda_function.function_name
 }
 
-output "my_lambda_function_arn" {
+output "my_lambda_function_invoke_arn" {
   value = aws_lambda_function.my_lambda_function.invoke_arn
 }

@@ -1,3 +1,4 @@
+# Description: Variables for the DynamoDB table module.
 variable "dynamodb_table_name" {
   description = "Required. Name of the DynamoDB table."
   type    = string
@@ -41,4 +42,21 @@ variable "dynamodb_table_write_capacity_maximum" {
 variable "dynamodb_table_write_capacity_target" {
   description = "Required. Target within autoscale range."
   type    = number
+}
+
+# Description: Variables for the Lambda module.
+variable "lambda_execution_role_name" {
+  description = "Required. Name of the Lambda execution role."
+  type    = string
+}
+
+variable "lambda_function_name" {
+  description = "Required. Name of the Lambda function."
+  type    = string
+}
+
+# Description: Variables for the API Gateway module.
+variable "my_api_gateway_rest_api_name" {
+  description = "Required. Name of the API Gateway."
+  type    = string
 }

@@ -1,5 +1,5 @@
 resource "aws_api_gateway_rest_api" "sample_api" {
-  name        = "SampleAPI"
+  name        = var.my_api_gateway_rest_api_name
   description = "API created by Terraform"
 }
 
@@ -22,7 +22,7 @@ resource "aws_api_gateway_integration" "lambda" {
   http_method             = aws_api_gateway_method.proxy.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = var.my_lambda_function_arn
+  uri                     = var.my_lambda_function_invoke_arn
 }
 
 resource "aws_lambda_permission" "apigateway_lambda_permission" {
