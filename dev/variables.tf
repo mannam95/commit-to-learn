@@ -50,6 +50,11 @@ variable "lambda_execution_role_name" {
   type    = string
 }
 
+variable "iam_policy_name" {
+  description = "Required. Name of the IAM policy."
+  type    = string
+}
+
 variable "lambda_function_name" {
   description = "Required. Name of the Lambda function."
   type    = string

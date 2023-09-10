@@ -16,7 +16,7 @@ resource "aws_iam_role" "lambda_execution_role" {
 }
 
 resource "aws_iam_policy" "lambda_dynamodb_policy" {
-  name        = "DynamoDBWriteAccess"
+  name        = var.iam_policy_name #"DynamoDBWriteAccess"
   description = "Policy for Lambda to write to DynamoDB"
 
   policy = jsonencode({

@@ -14,6 +14,7 @@ module "dynamodb" {
 module "lambda" {
   source = "../lambda"
   lambda_execution_role_name = var.lambda_execution_role_name
+  iam_policy_name = var.iam_policy_name
   lambda_function_name = var.lambda_function_name
   basic_dynamodb_table_arn = module.dynamodb.basic_dynamodb_table_arn
 }
