@@ -41,3 +41,7 @@ dummy.zip
 
 # Do not ig nore the below file
 !override.template.tfvars
+
+# ignore the below folder
+test
+terra-ec2.pem
