@@ -25,6 +25,8 @@ exports.handler = (event, context, callback) => {
   const weatherConditions = requestBody.WeatherConditions;
   const maintenanceAlerts = requestBody.MaintenanceAlerts;
 
+
+
   // create a single record with above details
   const recordItem = {
     RecordId: recordId,
@@ -73,7 +75,7 @@ exports.handler = (event, context, callback) => {
 
 function recordRide(recordItem) {
   return ddb.put({
-    TableName: 'DynamoDB-Terraform',
+    TableName: 'VehicleTelemetry-dev',
     Item: recordItem,
   }).promise();
 }
