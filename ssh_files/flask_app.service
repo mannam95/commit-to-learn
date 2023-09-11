@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance for a simple flask app
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/dynamo-python-etl
+ExecStart=/home/ubuntu/dynamo-python-etl/flaskenv/bin/gunicorn -b localhost:8000 app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
