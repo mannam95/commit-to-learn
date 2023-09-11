@@ -45,3 +45,6 @@ dummy.zip
 # ignore the below folder
 test
 terra-ec2.pem
+
+modules/ecr-app-runner
+azure
