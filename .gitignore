@@ -38,13 +38,15 @@ secrets.tf
 
 # the below files are used for testing purposes only
 dummy.zip
+dummy-dev.zip
+dummy-prod.zip
 
 # Do not ig nore the below file
 !override.template.tfvars
 
 # ignore the below folder
 test
-terra-ec2.pem
+*.pem
 
 modules/ecr-app-runner
 azure
