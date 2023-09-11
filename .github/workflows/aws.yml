@@ -70,10 +70,21 @@ jobs:
             pip install -r requirements.txt
             sudo cp -f /home/ubuntu/dynamo-python-etl/ssh_files/flask_app.service /etc/systemd/system/flask_app.service
             sudo systemctl daemon-reload
-            sudo systemctl start flask_app
-            sudo systemctl enable flask_app
+
+            # Check if Flask is running
+            if sudo systemctl is-active flask_app >/dev/null 2>&1; then
+                sudo systemctl restart flask_app   # Restart Flask if it's already running
+            else
+                sudo systemctl enable flask_app   # Enable Flask to start on boot
+                sudo systemctl start flask_app   # Start Flask if it's not running
+            fi
+
+            # Install Nginx
             sudo apt-get install -y nginx
+
+            # Copy Nginx config file
             sudo cp -f /home/ubuntu/dynamo-python-etl/ssh_files/default /etc/nginx/sites-available/default
+
             # Check if Nginx is running
             if sudo systemctl is-active nginx >/dev/null 2>&1; then
                 sudo systemctl restart nginx   # Restart Nginx if it's already running
