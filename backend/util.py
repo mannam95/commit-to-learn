@@ -3,6 +3,7 @@ import plotly.express as px
 import plotly.io as pio
 import plotly.graph_objects as go
 import base64
+import numpy as np
 
 
 # Provided data
@@ -16,11 +17,13 @@ records = []
 
 background_color = '#F1F1F1'
 
+fuel_data = np.random.normal(50, 15, 1000)  # Mean=50, Standard Deviation=15, 1000 data points
+
 
 for _ in range(num_records):
     weather = random.choice(WeatherConditions)
     maintenance_alert = random.choice(MaintenanceAlerts)
-    fuel_level = random.randint(0, 100)
+    fuel_level = random.randint(10, 100)
     air_level = random.choice(air_levels)
     
     records.append([weather, maintenance_alert, fuel_level, air_level])
@@ -102,23 +105,21 @@ def get_air_levels():
 # Get fuel level stats
 def get_fuel_levels():
     try:
-        # Generate x and y data for the line curve
-        x_intervals = list(range(0, 101, 10))
-        fuel_levels = [10, 25, 40, 60, 80, 70, 90, 95, 85, 100]
+        # Create a histogram
+        fig = px.histogram(fuel_data, nbins=30, histnorm='probability density')
 
-        # Create the line curve
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=x_intervals, y=fuel_levels, mode='lines+markers', name='Fuel Levels'))
+        # Overlay a normal distribution curve
+        x = np.linspace(min(fuel_data), max(fuel_data), 100)
+        y = (1 / (15 * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x - 50) / 15) ** 2)
+        fig.add_scatter(x=x, y=y, mode='lines', name='Distribution Line')
 
-        # Customize the layout
+        # Update axis labels and title
         fig.update_layout(
-            xaxis_title='Interval',
-            yaxis_title='Fuel Level',
-            xaxis=dict(tickvals=x_intervals, title='Fuel Intervals (in %)'),
-            yaxis=dict(title='Fuel Level'),
-            showlegend=True,
+            xaxis_title="Fuel Range",
+            yaxis_title="Probability Density",
+            showlegend=False,
             paper_bgcolor=background_color,  # Set the background color
-            plot_bgcolor=background_color  # Set the plot area background color
+            plot_bgcolor=background_color 
         )
 
         # Export the plot as an image in base64 format
