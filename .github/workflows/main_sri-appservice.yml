@@ -44,5 +44,11 @@ jobs:
             sudo systemctl start flask_app
             sudo systemctl enable flask_app
             sudo apt-get install -y nginx
-            sudo systemctl start nginx
-            sudo systemctl enable nginx
+            sudo cp -f /home/ubuntu/flask_app/ssh_files/default /etc/nginx/sites-available/default
+            # Check if Nginx is running
+            if sudo systemctl is-active nginx >/dev/null 2>&1; then
+                sudo systemctl restart nginx   # Restart Nginx if it's already running
+            else
+                sudo systemctl enable nginx   # Enable Nginx to start on boot
+                sudo systemctl start nginx   # Start Nginx if it's not running
+            fi
