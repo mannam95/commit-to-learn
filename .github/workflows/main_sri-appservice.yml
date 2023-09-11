@@ -38,6 +38,7 @@ jobs:
             sudo apt-get install -y python3-venv
             sudo python3 -m venv flaskenv
             source flaskenv/bin/activate
+            sudo chmod -R a+rwx flaskenv/
             pip install -r requirements.txt
             sudo cp -f /home/ubuntu/flask_app/ssh_files/flask_app.service /etc/systemd/system/flask_app.service
             sudo systemctl daemon-reload
