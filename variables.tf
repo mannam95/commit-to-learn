@@ -60,6 +60,11 @@ variable "lambda_function_name" {
   type        = string
 }
 
+variable "aws_lambda_function_zip_file_name" {
+  description = "Required. Name of the zip file containing the Lambda function code."
+  type        = string
+}
+
 # Description: Variables for the API Gateway module.
 variable "my_api_gateway_rest_api_name" {
   description = "Required. Name of the API Gateway."

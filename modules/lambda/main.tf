@@ -39,10 +39,10 @@ resource "aws_iam_policy_attachment" "lambda_dynamodb_policy_attachment" {
 
 resource "aws_lambda_function" "my_lambda_function" {
   function_name = var.lambda_function_name
-  role         = aws_iam_role.lambda_execution_role.arn
-  handler      = "index.handler"
-  runtime      = "nodejs16.x"
-  filename     = "dummy.zip"
+  role          = aws_iam_role.lambda_execution_role.arn
+  handler       = "index.handler"
+  runtime       = "nodejs16.x"
+  filename      = var.aws_lambda_function_zip_file_name
   lifecycle {
     ignore_changes = [filename]
   }

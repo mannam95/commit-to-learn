@@ -12,11 +12,12 @@ module "dynamodb" {
 }
 
 module "lambda" {
-  source                     = "./modules/lambda"
-  lambda_execution_role_name = var.lambda_execution_role_name
-  iam_policy_name            = var.iam_policy_name
-  lambda_function_name       = var.lambda_function_name
-  basic_dynamodb_table_arn   = module.dynamodb.basic_dynamodb_table_arn
+  source                            = "./modules/lambda"
+  lambda_execution_role_name        = var.lambda_execution_role_name
+  iam_policy_name                   = var.iam_policy_name
+  lambda_function_name              = var.lambda_function_name
+  aws_lambda_function_zip_file_name = var.aws_lambda_function_zip_file_name
+  basic_dynamodb_table_arn          = module.dynamodb.basic_dynamodb_table_arn
 }
 
 module "api-gateway" {
