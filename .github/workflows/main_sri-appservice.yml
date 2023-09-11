@@ -22,7 +22,7 @@ jobs:
           key: ${{secrets.PRIVATE_KEY}}
           port: ${{ secrets.PORT }}
           source: "flask_app"
-          target: "/var/www/html"
+          target: "/home/ubuntu"
       - name: Use SSH to Execute Scripts
         uses: appleboy/ssh-action@master
         with:
@@ -31,7 +31,7 @@ jobs:
           username: ${{secrets.USERNAME}}
           key: ${{secrets.PRIVATE_KEY}}
           script: |
-            cd /var/www/html/flask_app
+            cd /home/ubuntu/flask_app
             sudo apt-get update
             sudo apt-get install python3-venv
             python3 -m venv flaskenv
