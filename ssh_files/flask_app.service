@@ -6,7 +6,7 @@ After=network.target
 User=ubuntu
 Group=www-data
 WorkingDirectory=/home/ubuntu/flask_app
-ExecStart=/home/ubuntu/flask_app/venv/bin/gunicorn -b localhost:8000 app:app
+ExecStart=/home/ubuntu/flask_app/flaskenv/bin/gunicorn -b localhost:8000 app:app
 Restart=always
 
 [Install]

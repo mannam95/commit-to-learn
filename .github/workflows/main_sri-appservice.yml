@@ -39,7 +39,7 @@ jobs:
             sudo python3 -m venv flaskenv
             source flaskenv/bin/activate
             pip install -r requirements.txt
-            sudo cp -f /home/ubuntu/flask_app/ssh_files/flask.service /etc/systemd/system/flask.service
+            sudo cp -f /home/ubuntu/flask_app/ssh_files/flask_app.service /etc/systemd/system/flask_app.service
             sudo systemctl daemon-reload
             sudo systemctl start flask_app
             sudo systemctl enable flask_app
