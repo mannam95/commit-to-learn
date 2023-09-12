@@ -1,4 +1,4 @@
-
+# Below are the commands to run terraform dev environment
 devtfinit:
 	@terraform init -reconfigure -var-file=config/dev.auto.tfvars -backend-config=config/dev.backend.hcl
 
@@ -15,6 +15,7 @@ devtfdestroy:
 	@terraform destroy -var-file=config/dev.auto.tfvars
 
 
+# Below are the commands to run terraform prod environment
 prodtfinit:
 	@terraform init -reconfigure -var-file=config/prod.auto.tfvars -backend-config=config/prod.backend.hcl
 
