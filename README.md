@@ -18,17 +18,19 @@ These instructions will get you a copy of the project up and running on your loc
 * To Customise, below explained for dev environment. Same goes with other environments
   ```
     - new files to be create: auto.tfvars, secrets.tf
-    - the content for these files can be found in override.template.tfvars, override.template.secrets.tf
+    - the content for these files can be found in template/override.template.tfvars, template/override.template.secrets.tf
     - The above files contains sensitive information so do not check into version history.
   ```
 * Run the following command to create the infrastructure
   ```
-    - navigate to the respective folder (cd dev/prod)
-    - terraform init
-    - terraform validate (validates the config)
-    - terraform plan (gives the plan of the infrastructure)
-    - terraform apply (creates the infrastructure)
-    - terraform destroy (destroys the entire created infrastructure)
+    - navigate to the config folder
+    - create dev.auto.tfvars or prod.auto.tfvars as per env requirement
+    - go back to root folder
+    - make devtfinit
+    - make devtfvalidate (validates the config)
+    - make devtfplan (gives the plan of the infrastructure)
+    - make prodtfapply (creates the infrastructure)
+    - make prodtfdestroy (destroys the entire created infrastructure)
   ```
 
 
