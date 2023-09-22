@@ -39,6 +39,7 @@ import android.view.Surface;
 import android.widget.Toast;
 
 import com.example.glass.translateapi.ApiCall;
+import com.example.glass.translateapi.ApiResponseAlert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -466,7 +467,7 @@ public class CameraActionHandler implements OnImageAvailableListener {
                 // Handle the string response here
                 Log.d("API Response", response);
 
-//                AlertActivity.showAlert(context, "German", "ich bin ya");
+                ApiResponseAlert.showAlert(context, "German", "ich bin ya");
             }
 
             @Override
