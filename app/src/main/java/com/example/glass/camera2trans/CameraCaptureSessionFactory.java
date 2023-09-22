@@ -21,6 +21,7 @@ import android.hardware.camera2.CameraCaptureSession.StateCallback;
 import android.hardware.camera2.CameraDevice;
 import android.util.Log;
 import android.view.Surface;
+
 import java.util.List;
 
 /**
@@ -28,30 +29,30 @@ import java.util.List;
  */
 public class CameraCaptureSessionFactory {
 
-  private static final String TAG = CameraCaptureSessionFactory.class.getSimpleName();
+    private static final String TAG = CameraCaptureSessionFactory.class.getSimpleName();
 
-  /**
-   * {@link CameraDevice} used for creating the capture session.
-   */
-  private final CameraDevice cameraDevice;
+    /**
+     * {@link CameraDevice} used for creating the capture session.
+     */
+    private final CameraDevice cameraDevice;
 
-  /**
-   * Creates {@link CameraCaptureSessionFactory} using {@link CameraDevice} object.
-   */
-  public CameraCaptureSessionFactory(CameraDevice cameraDevice) {
-    this.cameraDevice = cameraDevice;
-  }
-
-  /**
-   * Creates camera capture session on the given {@link List<Surface>} of surfaces. Returns created
-   * {@link android.hardware.camera2.CameraCaptureSession} in stateCallback.
-   */
-  public void createCaptureSession(List<Surface> surfaceList, final StateCallback stateCallback) {
-    Log.d(TAG, "Creating capture session");
-    try {
-      cameraDevice.createCaptureSession(surfaceList, stateCallback, null);
-    } catch (CameraAccessException e) {
-      Log.e(TAG, "Creating capture session failed", e);
+    /**
+     * Creates {@link CameraCaptureSessionFactory} using {@link CameraDevice} object.
+     */
+    public CameraCaptureSessionFactory(CameraDevice cameraDevice) {
+        this.cameraDevice = cameraDevice;
     }
-  }
+
+    /**
+     * Creates camera capture session on the given {@link List<Surface>} of surfaces. Returns created
+     * {@link android.hardware.camera2.CameraCaptureSession} in stateCallback.
+     */
+    public void createCaptureSession(List<Surface> surfaceList, final StateCallback stateCallback) {
+        Log.d(TAG, "Creating capture session");
+        try {
+            cameraDevice.createCaptureSession(surfaceList, stateCallback, null);
+        } catch (CameraAccessException e) {
+            Log.e(TAG, "Creating capture session failed", e);
+        }
+    }
 }

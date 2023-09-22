@@ -21,6 +21,7 @@ import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CaptureRequest;
 import android.util.Log;
 import android.view.Surface;
+
 import java.util.List;
 
 /**
@@ -28,36 +29,36 @@ import java.util.List;
  */
 public class CaptureRequestProvider {
 
-  private static final String TAG = CaptureRequestProvider.class.getSimpleName();
+    private static final String TAG = CaptureRequestProvider.class.getSimpleName();
 
-  /**
-   * {@link CameraDevice} used for creating the capture request.
-   */
-  private final CameraDevice cameraDevice;
+    /**
+     * {@link CameraDevice} used for creating the capture request.
+     */
+    private final CameraDevice cameraDevice;
 
-  /**
-   * Creates object using {@link CameraDevice}.
-   */
-  public CaptureRequestProvider(CameraDevice cameraDevice) {
-    this.cameraDevice = cameraDevice;
-  }
-
-  /**
-   * Returns {@link CaptureRequest} built with the templateType. Adds targets as {@link
-   * List<Surface>}.
-   */
-  public CaptureRequest getCaptureRequest(int templateType, List<Surface> surfaces) {
-    Log.d(TAG, "Creating capture request for the template type: " + templateType);
-    try {
-      final CaptureRequest.Builder cameraRequestBuilder = cameraDevice
-          .createCaptureRequest(templateType);
-      for (Surface surface : surfaces) {
-        cameraRequestBuilder.addTarget(surface);
-      }
-      return cameraRequestBuilder.build();
-    } catch (CameraAccessException e) {
-      Log.e(TAG, "Creating capture request failed", e);
-      return null;
+    /**
+     * Creates object using {@link CameraDevice}.
+     */
+    public CaptureRequestProvider(CameraDevice cameraDevice) {
+        this.cameraDevice = cameraDevice;
     }
-  }
+
+    /**
+     * Returns {@link CaptureRequest} built with the templateType. Adds targets as {@link
+     * List<Surface>}.
+     */
+    public CaptureRequest getCaptureRequest(int templateType, List<Surface> surfaces) {
+        Log.d(TAG, "Creating capture request for the template type: " + templateType);
+        try {
+            final CaptureRequest.Builder cameraRequestBuilder = cameraDevice
+                    .createCaptureRequest(templateType);
+            for (Surface surface : surfaces) {
+                cameraRequestBuilder.addTarget(surface);
+            }
+            return cameraRequestBuilder.build();
+        } catch (CameraAccessException e) {
+            Log.e(TAG, "Creating capture request failed", e);
+            return null;
+        }
+    }
 }

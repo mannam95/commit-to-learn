@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.Size;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,77 +34,77 @@ import java.util.Comparator;
  */
 public class ImageReaderProvider {
 
-  private static final String TAG = ImageReaderProvider.class.getSimpleName();
+    private static final String TAG = ImageReaderProvider.class.getSimpleName();
 
-  /**
-   * Format in which images will be saved.
-   */
-  private static final int IMAGE_FORMAT = ImageFormat.JPEG;
+    /**
+     * Format in which images will be saved.
+     */
+    private static final int IMAGE_FORMAT = ImageFormat.JPEG;
 
-  /**
-   * Maximum amount of images for simultaneous access from ImageReader.
-   */
-  private static final int MAX_IMAGES = 1;
+    /**
+     * Maximum amount of images for simultaneous access from ImageReader.
+     */
+    private static final int MAX_IMAGES = 1;
 
-  /**
-   * An {@link ImageReader} that handles still image capture.
-   */
-  @Nullable
-  private ImageReader imageReader;
+    /**
+     * An {@link ImageReader} that handles still image capture.
+     */
+    @Nullable
+    private ImageReader imageReader;
 
-  /**
-   * Creates {@link ImageReader} instance.
-   */
-  public ImageReaderProvider(StreamConfigurationMap streamConfigurationMap) {
-    // For still image captures, we use the largest available size.
-    final Size pictureSize = Collections.max(
-        Arrays.asList(streamConfigurationMap.getOutputSizes(ImageFormat.JPEG)),
-        new CompareSizesByArea());
-    imageReader = ImageReader.newInstance(pictureSize.getWidth(), pictureSize.getHeight(),
-        IMAGE_FORMAT, MAX_IMAGES);
-  }
-
-  /**
-   * Returns {@link ImageReader} object.
-   */
-  @Nullable
-  public ImageReader getImageReader() {
-    return imageReader;
-  }
-
-  /**
-   * Closes {@link ImageReader}.
-   */
-  public void closeImageReader() {
-    Log.d(TAG, "Closing image reader");
-    if (imageReader != null) {
-      imageReader.close();
-      imageReader = null;
-      return;
+    /**
+     * Creates {@link ImageReader} instance.
+     */
+    public ImageReaderProvider(StreamConfigurationMap streamConfigurationMap) {
+        // For still image captures, we use the largest available size.
+        final Size pictureSize = Collections.max(
+                Arrays.asList(streamConfigurationMap.getOutputSizes(ImageFormat.JPEG)),
+                new CompareSizesByArea());
+        imageReader = ImageReader.newInstance(pictureSize.getWidth(), pictureSize.getHeight(),
+                IMAGE_FORMAT, MAX_IMAGES);
     }
-    Log.d(TAG, "Image reader is null");
-  }
 
-  /**
-   * Sets {@link OnImageAvailableListener} on the {@link ImageReader} object.
-   */
-  public void setOnImageAvailableListener(OnImageAvailableListener onImageAvailableListener,
-      Handler handler) {
-    if (imageReader != null) {
-      imageReader.setOnImageAvailableListener(onImageAvailableListener, handler);
+    /**
+     * Returns {@link ImageReader} object.
+     */
+    @Nullable
+    public ImageReader getImageReader() {
+        return imageReader;
     }
-  }
 
-  /**
-   * Compares two {@code Size} objects based on their areas.
-   */
-  static class CompareSizesByArea implements Comparator<Size> {
-
-    @Override
-    public int compare(Size lhs, Size rhs) {
-      // We cast here to ensure the multiplications won't overflow
-      return Long.signum((long) lhs.getWidth() * lhs.getHeight() -
-          (long) rhs.getWidth() * rhs.getHeight());
+    /**
+     * Closes {@link ImageReader}.
+     */
+    public void closeImageReader() {
+        Log.d(TAG, "Closing image reader");
+        if (imageReader != null) {
+            imageReader.close();
+            imageReader = null;
+            return;
+        }
+        Log.d(TAG, "Image reader is null");
     }
-  }
+
+    /**
+     * Sets {@link OnImageAvailableListener} on the {@link ImageReader} object.
+     */
+    public void setOnImageAvailableListener(OnImageAvailableListener onImageAvailableListener,
+                                            Handler handler) {
+        if (imageReader != null) {
+            imageReader.setOnImageAvailableListener(onImageAvailableListener, handler);
+        }
+    }
+
+    /**
+     * Compares two {@code Size} objects based on their areas.
+     */
+    static class CompareSizesByArea implements Comparator<Size> {
+
+        @Override
+        public int compare(Size lhs, Size rhs) {
+            // We cast here to ensure the multiplications won't overflow
+            return Long.signum((long) lhs.getWidth() * lhs.getHeight() -
+                    (long) rhs.getWidth() * rhs.getHeight());
+        }
+    }
 }

@@ -25,50 +25,50 @@ import android.util.Log;
  */
 public class BackgroundThreadHandler {
 
-  private static final String TAG = BackgroundThreadHandler.class.getSimpleName();
+    private static final String TAG = BackgroundThreadHandler.class.getSimpleName();
 
-  private final String threadName;
-  private HandlerThread handlerThread;
-  private Handler handler;
+    private final String threadName;
+    private HandlerThread handlerThread;
+    private Handler handler;
 
-  /**
-   * Constructor of this class needs a background thread name to be passed by an argument.
-   *
-   * @param threadName of the background thread to handle.
-   */
-  public BackgroundThreadHandler(String threadName) {
-    this.threadName = threadName;
-  }
-
-  /**
-   * Starts a background thread and its {@link Handler}.
-   */
-  public void startBackgroundThread() {
-    Log.d(TAG, "Starting thread " + threadName);
-    handlerThread = new HandlerThread(threadName);
-    handlerThread.start();
-    handler = new Handler(handlerThread.getLooper());
-  }
-
-  /**
-   * Stops the background thread and its {@link Handler}.
-   */
-  public void stopBackgroundThread() {
-    Log.d(TAG, "Stopping thread " + threadName);
-    handlerThread.quitSafely();
-    try {
-      handlerThread.join();
-      handlerThread = null;
-      handler = null;
-    } catch (InterruptedException e) {
-      Log.e(TAG, "Stopping thread " + threadName + " failed", e);
+    /**
+     * Constructor of this class needs a background thread name to be passed by an argument.
+     *
+     * @param threadName of the background thread to handle.
+     */
+    public BackgroundThreadHandler(String threadName) {
+        this.threadName = threadName;
     }
-  }
 
-  /**
-   * Returns {@link Handler} using the background thread.
-   */
-  public Handler getHandler() {
-    return handler;
-  }
+    /**
+     * Starts a background thread and its {@link Handler}.
+     */
+    public void startBackgroundThread() {
+        Log.d(TAG, "Starting thread " + threadName);
+        handlerThread = new HandlerThread(threadName);
+        handlerThread.start();
+        handler = new Handler(handlerThread.getLooper());
+    }
+
+    /**
+     * Stops the background thread and its {@link Handler}.
+     */
+    public void stopBackgroundThread() {
+        Log.d(TAG, "Stopping thread " + threadName);
+        handlerThread.quitSafely();
+        try {
+            handlerThread.join();
+            handlerThread = null;
+            handler = null;
+        } catch (InterruptedException e) {
+            Log.e(TAG, "Stopping thread " + threadName + " failed", e);
+        }
+    }
+
+    /**
+     * Returns {@link Handler} using the background thread.
+     */
+    public Handler getHandler() {
+        return handler;
+    }
 }

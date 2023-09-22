@@ -23,6 +23,7 @@ import android.hardware.camera2.CameraDevice;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Surface;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -31,85 +32,85 @@ import java.util.List;
  */
 public class CameraCaptureSessionController {
 
-  private static final String TAG = CameraCaptureSessionController.class.getSimpleName();
+    private static final String TAG = CameraCaptureSessionController.class.getSimpleName();
 
-  /**
-   * A {@link CameraCaptureSession } for the camera preview and to take pictures.
-   */
-  @Nullable
-  private CameraCaptureSession cameraCaptureSession;
+    /**
+     * A {@link CameraCaptureSession } for the camera preview and to take pictures.
+     */
+    @Nullable
+    private CameraCaptureSession cameraCaptureSession;
 
-  /**
-   * Provides {@link android.hardware.camera2.CaptureRequest} for the {@link CameraCaptureSession}.
-   */
-  @Nullable
-  private CaptureRequestProvider captureRequestProvider;
+    /**
+     * Provides {@link android.hardware.camera2.CaptureRequest} for the {@link CameraCaptureSession}.
+     */
+    @Nullable
+    private CaptureRequestProvider captureRequestProvider;
 
-  /**
-   * Creates preview session using template type and {@link List<Surface>} on which preview should
-   * be shown.
-   */
-  public void createPreviewSession(int templateType, List<Surface> surfaces) {
-    Log.d(TAG, "Creating session for the template: " + templateType);
-    try {
-      if (cameraCaptureSession != null && captureRequestProvider != null) {
-        cameraCaptureSession
-            .setRepeatingRequest(captureRequestProvider.getCaptureRequest(templateType, surfaces),
-                null, null);
-      }
-    } catch (CameraAccessException e) {
-      Log.e(TAG, "Creating session failed", e);
+    /**
+     * Creates preview session using template type and {@link List<Surface>} on which preview should
+     * be shown.
+     */
+    public void createPreviewSession(int templateType, List<Surface> surfaces) {
+        Log.d(TAG, "Creating session for the template: " + templateType);
+        try {
+            if (cameraCaptureSession != null && captureRequestProvider != null) {
+                cameraCaptureSession
+                        .setRepeatingRequest(captureRequestProvider.getCaptureRequest(templateType, surfaces),
+                                null, null);
+            }
+        } catch (CameraAccessException e) {
+            Log.e(TAG, "Creating session failed", e);
+        }
     }
-  }
 
-  /**
-   * Captures picture and calls method on {@link CaptureCallback} to notify about this.
-   */
-  public void captureStillPicture(Surface surface, CaptureCallback captureCallback) {
-    Log.d(TAG, "Capturing picture");
-    if (cameraCaptureSession == null) {
-      Log.i(TAG, "Session is null, picture won't be taken.");
-      return;
+    /**
+     * Captures picture and calls method on {@link CaptureCallback} to notify about this.
+     */
+    public void captureStillPicture(Surface surface, CaptureCallback captureCallback) {
+        Log.d(TAG, "Capturing picture");
+        if (cameraCaptureSession == null) {
+            Log.i(TAG, "Session is null, picture won't be taken.");
+            return;
+        }
+        if (captureRequestProvider == null) {
+            Log.i(TAG, "RequestProvider is null, picture won't be taken.");
+            return;
+        }
+        try {
+            cameraCaptureSession.stopRepeating();
+            cameraCaptureSession.abortCaptures();
+            cameraCaptureSession
+                    .capture(captureRequestProvider.getCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE,
+                            Collections.singletonList(surface)), captureCallback, null);
+        } catch (CameraAccessException e) {
+            Log.e(TAG, "Capturing picture failed", e);
+        }
     }
-    if (captureRequestProvider == null) {
-      Log.i(TAG, "RequestProvider is null, picture won't be taken.");
-      return;
-    }
-    try {
-      cameraCaptureSession.stopRepeating();
-      cameraCaptureSession.abortCaptures();
-      cameraCaptureSession
-          .capture(captureRequestProvider.getCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE,
-              Collections.singletonList(surface)), captureCallback, null);
-    } catch (CameraAccessException e) {
-      Log.e(TAG, "Capturing picture failed", e);
-    }
-  }
 
-  /**
-   * Sets {@link CameraCaptureSession}.
-   */
-  public void setSession(CameraCaptureSession cameraCaptureSession) {
-    this.cameraCaptureSession = cameraCaptureSession;
-  }
-
-  /**
-   * Closes {@link CameraCaptureSession}.
-   */
-  public void closeSession() {
-    Log.d(TAG, "Closing session");
-    if (cameraCaptureSession != null) {
-      cameraCaptureSession.close();
-      cameraCaptureSession = null;
-      return;
+    /**
+     * Sets {@link CameraCaptureSession}.
+     */
+    public void setSession(CameraCaptureSession cameraCaptureSession) {
+        this.cameraCaptureSession = cameraCaptureSession;
     }
-    Log.d(TAG, "Camera capture session is null");
-  }
 
-  /**
-   * Sets {@link CameraDevice} for the {@link CaptureRequestProvider}.
-   */
-  public void setCameraDevice(CameraDevice cameraDevice) {
-    captureRequestProvider = new CaptureRequestProvider(cameraDevice);
-  }
+    /**
+     * Closes {@link CameraCaptureSession}.
+     */
+    public void closeSession() {
+        Log.d(TAG, "Closing session");
+        if (cameraCaptureSession != null) {
+            cameraCaptureSession.close();
+            cameraCaptureSession = null;
+            return;
+        }
+        Log.d(TAG, "Camera capture session is null");
+    }
+
+    /**
+     * Sets {@link CameraDevice} for the {@link CaptureRequestProvider}.
+     */
+    public void setCameraDevice(CameraDevice cameraDevice) {
+        captureRequestProvider = new CaptureRequestProvider(cameraDevice);
+    }
 }

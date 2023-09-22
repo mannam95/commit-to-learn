@@ -27,53 +27,53 @@ import android.widget.ImageView;
  */
 public class AnimationManager {
 
-  /**
-   * Minimum alpha for animations.
-   */
-  private static final float ALPHA_MIN = 0F;
+    /**
+     * Minimum alpha for animations.
+     */
+    private static final float ALPHA_MIN = 0F;
 
-  /**
-   * Maximum alpha for animations.
-   */
-  private static final float ALPHA_MAX = 0.8F;
+    /**
+     * Maximum alpha for animations.
+     */
+    private static final float ALPHA_MAX = 0.8F;
 
-  /**
-   * Transition duration in milliseconds,
-   */
-  private static final int TRANSITION_DURATION_MS = 200;
+    /**
+     * Transition duration in milliseconds,
+     */
+    private static final int TRANSITION_DURATION_MS = 200;
 
-  /**
-   * Animates shutter action on the given {@link ImageView}.
-   */
-  public static void animateShutter(Context context, ImageView imageView) {
-    imageView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.alpha));
-  }
-
-  /**
-   * Changes given {@link ImageView} image resource by the animation using alpha.
-   */
-  public static void changeImageByAlpha(final ImageView imageView, final int resource) {
-    imageView.animate().alpha(ALPHA_MIN).withEndAction(new Runnable() {
-      @Override
-      public void run() {
-        imageView.setImageResource(resource);
-        imageView.animate().alpha(ALPHA_MAX);
-      }
-    });
-  }
-
-  /**
-   * Performs transition on the image background to change highlight of a given {@link ImageView}.
-   *
-   * @param reverse true means reverse transition.
-   */
-  public static void changeBackgroundDrawable(final ImageView imageView, final boolean reverse) {
-    final TransitionDrawable transitionDrawable = (TransitionDrawable) imageView.getBackground();
-
-    if (reverse) {
-      transitionDrawable.reverseTransition(TRANSITION_DURATION_MS);
-    } else {
-      transitionDrawable.startTransition(TRANSITION_DURATION_MS);
+    /**
+     * Animates shutter action on the given {@link ImageView}.
+     */
+    public static void animateShutter(Context context, ImageView imageView) {
+        imageView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.alpha));
     }
-  }
+
+    /**
+     * Changes given {@link ImageView} image resource by the animation using alpha.
+     */
+    public static void changeImageByAlpha(final ImageView imageView, final int resource) {
+        imageView.animate().alpha(ALPHA_MIN).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                imageView.setImageResource(resource);
+                imageView.animate().alpha(ALPHA_MAX);
+            }
+        });
+    }
+
+    /**
+     * Performs transition on the image background to change highlight of a given {@link ImageView}.
+     *
+     * @param reverse true means reverse transition.
+     */
+    public static void changeBackgroundDrawable(final ImageView imageView, final boolean reverse) {
+        final TransitionDrawable transitionDrawable = (TransitionDrawable) imageView.getBackground();
+
+        if (reverse) {
+            transitionDrawable.reverseTransition(TRANSITION_DURATION_MS);
+        } else {
+            transitionDrawable.startTransition(TRANSITION_DURATION_MS);
+        }
+    }
 }

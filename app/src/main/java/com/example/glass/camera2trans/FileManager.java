@@ -25,6 +25,7 @@ import android.media.MediaScannerConnection;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
@@ -36,50 +37,50 @@ import java.util.Locale;
  */
 public class FileManager {
 
-  private static final String TAG = FileManager.class.getSimpleName();
-  private static final String DATE_FORMAT_PATTERN = "yyyyMMddHHmmss";
-  private static final String STORAGE_DIRECTORY_CHILD = "";
-  private static final String VIDEO_FILE_NAME_BEGINNING = "Video";
-  private static final String VIDEO_FILE_NAME_EXTENSION = ".mp4";
+    private static final String TAG = FileManager.class.getSimpleName();
+    private static final String DATE_FORMAT_PATTERN = "yyyyMMddHHmmss";
+    private static final String STORAGE_DIRECTORY_CHILD = "";
+    private static final String VIDEO_FILE_NAME_BEGINNING = "Video";
+    private static final String VIDEO_FILE_NAME_EXTENSION = ".mp4";
 
-  /**
-   * Creates new file in the Movies directory on the device.
-   */
-  public static File getOutputVideoFile() {
-    Log.d(TAG, "Creating output video file");
-    final File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-        Environment.DIRECTORY_MOVIES), STORAGE_DIRECTORY_CHILD);
-    final String timeStamp = new SimpleDateFormat(DATE_FORMAT_PATTERN, Locale.US)
-        .format(new Date());
-    return new File(mediaStorageDir.getPath() + File.separator +
-        VIDEO_FILE_NAME_BEGINNING + timeStamp + VIDEO_FILE_NAME_EXTENSION);
-  }
-
-  /**
-   * Stores given image from the {@link ImageReader} object, using {@link MediaStore}.
-   */
-  public static void saveImage(final Context context, final ImageReader imageReader) {
-    Log.d(TAG, "Saving image");
-    final Image image = imageReader.acquireNextImage();
-    final ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-    final byte[] bytes = new byte[buffer.remaining()];
-    buffer.get(bytes);
-    final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-    if (bitmap != null) {
-      MediaStore.Images.Media
-          .insertImage(context.getContentResolver(), bitmap, null, null);
-    } else {
-      Log.d(TAG, "Bitmap is null");
+    /**
+     * Creates new file in the Movies directory on the device.
+     */
+    public static File getOutputVideoFile() {
+        Log.d(TAG, "Creating output video file");
+        final File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_MOVIES), STORAGE_DIRECTORY_CHILD);
+        final String timeStamp = new SimpleDateFormat(DATE_FORMAT_PATTERN, Locale.US)
+                .format(new Date());
+        return new File(mediaStorageDir.getPath() + File.separator +
+                VIDEO_FILE_NAME_BEGINNING + timeStamp + VIDEO_FILE_NAME_EXTENSION);
     }
-    image.close();
-  }
 
-  /**
-   * Refreshes file indexing for the {@link MediaStore}. It is necessary to see the recorded video
-   * in the gallery, without rebooting the device.
-   */
-  public static void refreshFileIndexing(Context context, File file) {
-    Log.d(TAG, "Refreshing file indexing");
-    MediaScannerConnection.scanFile(context, new String[]{file.getAbsolutePath()}, null, null);
-  }
+    /**
+     * Stores given image from the {@link ImageReader} object, using {@link MediaStore}.
+     */
+    public static void saveImage(final Context context, final ImageReader imageReader) {
+        Log.d(TAG, "Saving image");
+        final Image image = imageReader.acquireNextImage();
+        final ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+        final byte[] bytes = new byte[buffer.remaining()];
+        buffer.get(bytes);
+        final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        if (bitmap != null) {
+            MediaStore.Images.Media
+                    .insertImage(context.getContentResolver(), bitmap, null, null);
+        } else {
+            Log.d(TAG, "Bitmap is null");
+        }
+        image.close();
+    }
+
+    /**
+     * Refreshes file indexing for the {@link MediaStore}. It is necessary to see the recorded video
+     * in the gallery, without rebooting the device.
+     */
+    public static void refreshFileIndexing(Context context, File file) {
+        Log.d(TAG, "Refreshing file indexing");
+        MediaScannerConnection.scanFile(context, new String[]{file.getAbsolutePath()}, null, null);
+    }
 }
