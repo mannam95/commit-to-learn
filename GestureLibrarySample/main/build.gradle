@@ -14,10 +14,23 @@
  * limitations under the License.
  */
 
-include ':app'
+apply plugin: 'com.android.library'
 
-includeBuild('./GestureLibrarySample') {
-    dependencySubstitution {
-        substitute module('com.example.glass.ui:gesture-lib-sample') with project(':main')
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        minSdkVersion 27
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0.0"
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.robolectric:robolectric:4.1'
 }
