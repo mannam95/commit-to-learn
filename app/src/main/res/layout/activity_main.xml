@@ -24,7 +24,7 @@
 
   <fragment
       android:id="@+id/camera_fragment"
-      android:name="com.example.glass.camera2sample.CameraFragment"
+      android:name="com.example.glass.camera2trans.CameraFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
 

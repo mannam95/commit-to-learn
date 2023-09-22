@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.glass.camera2sample;
+package com.example.glass.camera2trans;
 
 import android.Manifest.permission;
 import android.content.pm.PackageManager;
@@ -34,8 +34,8 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import com.example.glass.camera2sample.CameraActionHandler.CameraActionHandlerCallback;
-import com.example.glass.camera2sample.CameraActionHandler.CameraMode;
+import com.example.glass.camera2trans.CameraActionHandler.CameraActionHandlerCallback;
+import com.example.glass.camera2trans.CameraActionHandler.CameraMode;
 import com.example.glass.ui.GlassGestureDetector;
 import java.util.Objects;
 

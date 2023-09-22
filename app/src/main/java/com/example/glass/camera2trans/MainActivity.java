@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.glass.camera2sample;
+package com.example.glass.camera2trans;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
