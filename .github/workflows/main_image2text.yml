@@ -4,11 +4,11 @@
 
 name: Build and deploy Python app to Azure Web App - image2text
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+on: workflow_dispatch
+  # push:
+  #   branches:
+  #     - main
+  # workflow_dispatch:
 
 jobs:
   build:
