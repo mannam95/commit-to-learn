@@ -15,6 +15,8 @@ RUN pip install -r requirements.txt
 COPY ./ /backend/
 
 # Expose the port (assuming your React app runs on port 3000)
-EXPOSE 5000
+EXPOSE 80
 
 CMD ["python", "app.py"]
+
+# CMD ["flask", "run", "--host=0.0.0.0"]

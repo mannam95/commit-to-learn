@@ -3,6 +3,10 @@ import backend.util as util
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return "Hello World!"
+
 
 @app.route('/get_translated_text', methods=['GET'])
 def get_translated_text():
@@ -14,5 +18,5 @@ def get_translated_text():
     return response
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=80)
     # app.run(debug=True)
