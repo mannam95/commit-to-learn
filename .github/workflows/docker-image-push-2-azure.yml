@@ -30,7 +30,5 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: |
-          yaimg2text.azurecr.io/ocrtexttranslate:${{ github.sha }}
-          latest
+        tags: yaimg2text.azurecr.io/ocrtexttranslate:latest
         file: ./Dockerfile
