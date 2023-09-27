@@ -1,13 +1,16 @@
 import os
 from google.cloud import vision
+from deep_translator import GoogleTranslator
 
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"/google/apijson/eminent-bond-278322-2cfd6c241bfa.json"
 
+error_text = "Kein Text erkannt"
+
 def get_img_content(api_request):
 
     is_file = False
-    img_content = "No text detected"
+    img_content = error_text
 
     try:
         print("API Request:", api_request)
@@ -29,7 +32,7 @@ def get_img_content(api_request):
 
 
 def detect_text_from_image(file_content):
-    detected_text = "No text detected"
+    detected_text = error_text
     try: 
         """Detects text in the file located in Google Cloud Storage or on the Web."""
 
@@ -63,6 +66,14 @@ def detect_text_from_image(file_content):
     except:
         return detected_text
 
+def translate_detected_text(detected_text):
+    try: 
+        translated_text = GoogleTranslator(source='auto', target='de').translate(detected_text) 
+        
+        return translated_text
+    except:
+        return error_text# Path: backend/util.py
+
 def get_translated_text(api_request):
     try: 
         is_file, file_content = get_img_content(api_request)
@@ -70,6 +81,8 @@ def get_translated_text(api_request):
         if is_file == False:
             return file_content
         
-        return detect_text_from_image(file_content)
+        detected_text = detect_text_from_image(file_content)
+
+        return translate_detected_text(detected_text)
     except:
-        return "No text detected"
+        return error_text
