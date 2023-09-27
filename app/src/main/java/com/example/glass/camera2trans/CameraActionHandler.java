@@ -30,6 +30,7 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
+import android.media.Image;
 import android.media.ImageReader;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.provider.MediaStore;
@@ -41,6 +42,7 @@ import android.widget.Toast;
 import com.example.glass.translateapi.ApiCall;
 import com.example.glass.translateapi.ApiResponseAlert;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -452,13 +454,12 @@ public class CameraActionHandler implements OnImageAvailableListener {
                     public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                                    @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
                         startPreview();
-                        triggerAPI();
                     }
                 });
     }
 
 
-    public void triggerAPI() {
+    public void triggerAPI(byte[] imageData) {
         Log.d(TAG, "Triggering API picture");
 
         apiCall.performAPIRequest(new ApiCall.ResponseCallback() {
@@ -467,7 +468,7 @@ public class CameraActionHandler implements OnImageAvailableListener {
                 // Handle the string response here
                 Log.d("API Response", response);
 
-                ApiResponseAlert.showAlert(context, "German", "ich bin ya");
+                ApiResponseAlert.showAlert(context, "German", response);
             }
 
             @Override
@@ -476,7 +477,7 @@ public class CameraActionHandler implements OnImageAvailableListener {
                 Log.d("API Error Response", response);
 //        System.out.println(response);
             }
-        });
+        }, imageData);
     }
 
     /**
@@ -597,7 +598,26 @@ public class CameraActionHandler implements OnImageAvailableListener {
     @Override
     public void onImageAvailable(ImageReader reader) {
         Log.d(TAG, "Image is available");
-        FileManager.saveImage(context, reader);
+        Image image = null;
+        try {
+//            FileManager.saveImage(context, reader);
+
+            image = reader.acquireLatestImage();
+
+            if (image != null) {
+                ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+                byte[] bytes = new byte[buffer.capacity()];
+                buffer.get(bytes);
+
+                // You now have the byte array of the image, you can pass it in the body of HTTP post request.
+                triggerAPI(bytes);
+            }
+
+        } finally {
+            if (image != null) {
+                image.close();
+            }
+        }
     }
 
     /**
