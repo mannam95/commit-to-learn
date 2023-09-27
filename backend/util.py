@@ -33,11 +33,6 @@ def detect_text_from_image(file_content):
     try: 
         """Detects text in the file located in Google Cloud Storage or on the Web."""
 
-        #   file_name = os.path.abspath(image_path)
-
-        #   with io.open(file_name, 'rb') as image_file:
-        #       content = image_file.read()
-
         content = file_content
 
         # construct an image instance
