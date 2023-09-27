@@ -1,3 +1,4 @@
 pandas
 flask
 google-cloud-vision==3.4.2
+deep-translator
