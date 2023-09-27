@@ -31,4 +31,4 @@ jobs:
       with:
         push: true
         tags: yaimg2text.azurecr.io/ocrtexttranslate:latest
-        file: ./Dockerfile
+        file: ./Dockerfile.prod
