@@ -473,9 +473,8 @@ public class CameraActionHandler implements OnImageAvailableListener {
 
             @Override
             public void onError(String response) {
-                // Handle errors, e.g., display an error message
                 Log.d("API Error Response", response);
-//        System.out.println(response);
+                ApiResponseAlert.showAlert(context, "German", response);
             }
         }, imageData);
     }

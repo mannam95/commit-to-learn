@@ -4,19 +4,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import okhttp3.MultipartBody;
-import javax.net.ssl.HttpsURLConnection;
-
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ApiCall {
     private ApiService apiService;
@@ -42,9 +35,6 @@ public class ApiCall {
         builder.addFormDataPart("fileName", "image.jpg", requestBody);
 
         MultipartBody requestBodyNew = builder.build();
-
-        // Create MultipartBody.Part using file name and RequestBody
-        // MultipartBody.Part body = MultipartBody.Part.createFormData("fileName", "image.jpg", requestBody);
 
         Call<Object> call = apiInterface.getData(requestBodyNew);
 
