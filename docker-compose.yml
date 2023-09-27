@@ -3,10 +3,11 @@ services:
   backend:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: image2tex-con
     image: image2tex-img
     ports:
       - "4200:80"
     volumes:
       - "./google/apijson/:/google/apijson"
+      - "./:/backend"
