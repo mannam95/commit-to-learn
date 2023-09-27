@@ -8,3 +8,5 @@ services:
     image: image2tex-img
     ports:
       - "4200:80"
+    volumes:
+      - "./google/apijson/:/google/apijson"

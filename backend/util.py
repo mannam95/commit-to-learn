@@ -3,7 +3,7 @@ from google.cloud import vision
 import pandas as pd
 
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"eminent-bond-278322-2cfd6c241bfa.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"/google/apijson/eminent-bond-278322-2cfd6c241bfa.json"
 
 def detect_text_from_image(image_path):
     detected_text = "No text detected"
