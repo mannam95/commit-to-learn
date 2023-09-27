@@ -19,7 +19,7 @@ public class ApiService {
                 .addInterceptor(interceptor)
                 .build();
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl("https://image2text.azurewebsites.net/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
