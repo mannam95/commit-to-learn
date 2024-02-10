@@ -1,29 +1,20 @@
-# JAVA - Learn
+# Glass Camera to Translate
 
-This is a repository which I would like to maintain java related code whenever I do some new project.
+- This repo is cloned from [glass-enterprise-samples](https://github.com/googlesamples/glass-enterprise-samples)
+- This project translates the text capture in the camera and displays as an alert
+- Camera API: [Camera2 API](https://developer.android.com/reference/android/hardware/camera2/package-summary).
 
-## Getting Started
+## Pre-requisites
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes
+- Android Studio
+- Android 4.4(KitKat) - API Level 19
+- java JDK = 15
+- Used Gradle version = 6.5.1
+- Google Glass Device
+- Install Google Glass driver in the connected computer
 
+## Running
 
-### Prerequisites
-
-* Java
-* Docker
-* Oops (Object oriented concepts)
-* JDK, JRE, Docker should be installed
-* Tools: IntelliJ
-
-### Installing
-
-* Clone the repository or download and unzip it.
-
-## Projects
-
-Below are rhe projects that are presented in this work. Further instructions can be found in the respected folders.
-
-| #No | Name                                           | Link   | Details                                                               |
-| --- | ---------------------------------------------- | ------------------------------------------------------------------------------------ | --------- |
-| 1   | interview-tasks                 | [View](https://github.com/mannam95/learn-code/tree/main/java/interview-tasks)  | contains my coding tasks |
-| 2   | hibernate-app                   | [View](https://github.com/mannam95/learn-code/tree/main/java/hibernate-app)  | created a simple hibenate-app which serves some API's |
+- This sample does not require any additional setup other than the above mentioned. 
+- Connect your google glass device to your internet else it can't communicate to API.
+- Open the project in Android Studio, connect your device, and press Play to launch the app!
