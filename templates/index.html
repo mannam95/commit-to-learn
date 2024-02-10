@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Flask App</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="{{ url_for('static', filename='js/app.js')}}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/app.css')}}">
+</head>
+
+<body>
+	<header>
+		<div class="overlay">
+			<h1>Vehicle Telemetry DashBoard</h1>
+			<h3>Below are the available statistics from the current logs.</h3>
+		</div>
+	</header>
+	<div class="bodyContainer">
+		<div class="row row1">
+			<div class="column">
+				<div class="card">
+					<h3>Weather Conditions Stats</h3>
+					<img class="statsImg" id="weather_stats" />
+				</div>
+			</div>
+
+			<div class="column">
+				<div class="card">
+					<h3>Fuel Level Stats</h3>
+					<img class="statsImg" id="fuel_level_stats" />
+				</div>
+			</div>
+		</div>
+		<div class="row row2">
+			<div class="column">
+				<div class="card">
+					<h3>Air Level Stats</h3>
+					<img class="statsImg" id="air_level_stats" />
+				</div>
+			</div>
+
+			<div class="column">
+				<div class="card">
+					<h3>Maintenance Alerts Stats</h3>
+					<img class="statsImg" id="maintenance_stats" />
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
