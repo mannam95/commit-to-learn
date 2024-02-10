@@ -1,0 +1,29 @@
+# Get Alpine Linux
+FROM node:16.18.1-alpine AS node
+
+# change working directory
+WORKDIR /angular
+
+# copy package.json
+COPY package.json ./
+
+# Install Angular CLI
+RUN npm install -g @angular/cli@14.2.0
+
+# install dependencies
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# build production code
+RUN npm run build --prod
+
+# Get Nginx
+FROM nginx:1.21.3-alpine
+
+# Copy source code
+COPY --from=node /angular/dist/structure-ang /usr/share/nginx/html
+
+# Export port 4200
+EXPOSE 80
