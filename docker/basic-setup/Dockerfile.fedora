@@ -1,0 +1,11 @@
+# pull a base fedora image
+FROM fedora:latest
+
+# Update the system
+RUN dnf update -y
+
+# Install some basic tools
+RUN dnf install -y vim nano less
+
+# Once the container is created, run the following commands
+CMD ["/bin/bash"]
