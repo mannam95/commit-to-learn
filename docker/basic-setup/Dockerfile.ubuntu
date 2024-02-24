@@ -12,6 +12,3 @@ RUN apt-get install -y software-properties-common
 
 # Install some basic tools
 RUN apt-get install -y vim nano less
-
-# Once the container is created, run the following commands
-CMD ["/bin/bash"]
