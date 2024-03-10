@@ -1,7 +1,7 @@
 version: '3'
 services:
     frontend:
-        image: angular-webapp
+        image: angular-webapp-dev
         build:
             context: .
             dockerfile: Dockerfile.dev
@@ -10,5 +10,14 @@ services:
         volumes:
             - "./:/angular"
             - "ang_node_vol:/angular/node_modules"
+        profiles: ["app-dev"]
+    frontend-prod:
+        image: angular-webapp-prod
+        build:
+            context: .
+            dockerfile: Dockerfile.prod
+        ports: 
+            - "4300:80"
+        profiles: ["app-prod"]
 volumes:
   ang_node_vol:
