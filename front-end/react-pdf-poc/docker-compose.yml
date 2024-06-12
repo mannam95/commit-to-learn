@@ -1,0 +1,23 @@
+networks:
+  default:
+
+services:
+  react-pdf-poc:
+    image: react-pdf-poc:latest
+    container_name: react-pdf-poc-c1
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4200:3000"
+    environment:
+      - WDS_SOCKET_HOST=127.0.0.1 
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ./:/react
+      - react-pdf-nm:/react/node_modules
+    restart: always
+
+volumes:
+  react-pdf-nm:
