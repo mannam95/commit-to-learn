@@ -9,7 +9,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "4200:3000"
+      - "3006:3006"
     environment:
       - WDS_SOCKET_HOST=127.0.0.1 
       - CHOKIDAR_USEPOLLING=true
