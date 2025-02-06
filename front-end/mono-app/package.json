@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "workspaces": [
+    "app",
+    "libraries/*"
+  ],
+  "name": "monorepo-demo",
+  "scripts": {
+    "start": "yarn workspace @monorepo/app start",
+    "build": "yarn build:components && yarn build:app",
+    "build:components": "yarn workspace @monorepo/reusable-components build",
+    "build:app": "yarn workspace @monorepo/app build",
+    "dev": "concurrently \"yarn workspace @monorepo/reusable-components watch\" \"yarn workspace @monorepo/app start\"",
+    "install:all": "yarn install",
+    "start:prod": "yarn build && serve -s app/build -p 3000"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "serve": "^14.2.1"
+  }
+} 
