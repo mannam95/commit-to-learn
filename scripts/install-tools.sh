@@ -91,6 +91,29 @@ install_terraform() {
     echo "Terraform installed."
 }
 
+# Function to install kubectl
+install_kubectl() {
+    echo "Installing kubectl..."
+    sudo apt update
+    # apt-transport-https may be a dummy package; if so, you can skip that package
+    sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
+
+    # download the Release key
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    # allow unprivileged APT programs to read this keyring
+    sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+    # This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+    # helps tools such as command-not-found to work correctly
+    sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list
+
+    sudo apt update
+    sudo apt install -y kubectl
+    echo "kubectl installed."
+}
+
 # Function to install GitHub Desktop
 install_github_desktop() {
     echo "Installing GitHub Desktop..."
@@ -110,9 +133,10 @@ show_menu() {
     echo "4) Visual Studio Code"
     echo "5) Azure CLI"
     echo "6) Terraform"
-    echo "7) GitHub Desktop"
-    echo "8) Install All"
-    echo "9) Exit"
+    echo "7) kubectl"
+    echo "8) GitHub Desktop"
+    echo "9) Install All"
+    echo "10) Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -135,18 +159,22 @@ show_menu() {
             install_terraform
             ;;
         7)
-            install_github_desktop
+            install_kubectl
             ;;
         8)
+            install_github_desktop
+            ;;
+        9)
             install_chrome
             install_brave
             install_docker
             install_vscode
             install_azure_cli
             install_terraform
+            install_kubectl
             install_github_desktop
             ;;
-        9)
+        10)
             echo "Exiting."
             exit 0
             ;;
