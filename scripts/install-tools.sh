@@ -52,24 +52,32 @@ install_vscode() {
     echo "Visual Studio Code installed."
 }
 
-# Function to install Sublime Text
-install_sublime() {
-    echo "Installing Sublime Text..."
-    wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
-    echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-    sudo apt-get update
-    sudo apt-get install -y sublime-text
-    echo "Sublime Text installed."
-}
+# Function to install Azure CLI
+install_azure_cli() {
+    echo "Installing Azure CLI..."
 
-# Function to install GitHub Desktop
-install_github_desktop() {
-    echo "Installing GitHub Desktop..."
-    wget -qO - https://apt.packages.shiftkey.dev/gpg.key | gpg --dearmor | sudo tee /usr/share/keyrings/shiftkey-packages.gpg > /dev/null
-    sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/shiftkey-packages.gpg] https://apt.packages.shiftkey.dev/ubuntu/ any main" > /etc/apt/sources.list.d/shiftkey-packages.list'
+    sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release
+    
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+    sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+
+    AZ_DIST=$(lsb_release -cs)
+
+    # Proper way to handle newlines
+    sudo tee /etc/apt/sources.list.d/azure-cli.sources > /dev/null <<EOF
+        Types: deb
+        URIs: https://packages.microsoft.com/repos/azure-cli/
+        Suites: ${AZ_DIST}
+        Components: main
+        Architectures: $(dpkg --print-architecture)
+        Signed-by: /etc/apt/keyrings/packages.microsoft.gpg
+EOF
+
+    rm -f packages.microsoft.gpg
     sudo apt update
-    sudo apt install -y github-desktop
-    echo "GitHub Desktop installed."
+    sudo apt install -y azure-cli
+
+    echo "Azure CLI installed."
 }
 
 # Function to install terraform
@@ -83,6 +91,16 @@ install_terraform() {
     echo "Terraform installed."
 }
 
+# Function to install GitHub Desktop
+install_github_desktop() {
+    echo "Installing GitHub Desktop..."
+    wget -qO - https://apt.packages.shiftkey.dev/gpg.key | gpg --dearmor | sudo tee /usr/share/keyrings/shiftkey-packages.gpg > /dev/null
+    sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/shiftkey-packages.gpg] https://apt.packages.shiftkey.dev/ubuntu/ any main" > /etc/apt/sources.list.d/shiftkey-packages.list'
+    sudo apt update
+    sudo apt install -y github-desktop
+    echo "GitHub Desktop installed."
+}
+
 # Menu for user to select installation
 show_menu() {
     echo "Select an option to install:"
@@ -90,9 +108,9 @@ show_menu() {
     echo "2) Brave Browser"
     echo "3) Docker"
     echo "4) Visual Studio Code"
-    echo "5) Sublime Text"
-    echo "6) GitHub Desktop"
-    echo "7) Terraform"
+    echo "5) Azure CLI"
+    echo "6) Terraform"
+    echo "7) GitHub Desktop"
     echo "8) Install All"
     echo "9) Exit"
     read -p "Enter your choice: " choice
@@ -111,22 +129,22 @@ show_menu() {
             install_vscode
             ;;
         5)
-            install_sublime
+            install_azure_cli
             ;;
         6)
-            install_github_desktop
+            install_terraform
             ;;
         7)
-            install_terraform
+            install_github_desktop
             ;;
         8)
             install_chrome
             install_brave
             install_docker
             install_vscode
-            install_sublime
-            install_github_desktop
+            install_azure_cli
             install_terraform
+            install_github_desktop
             ;;
         9)
             echo "Exiting."
