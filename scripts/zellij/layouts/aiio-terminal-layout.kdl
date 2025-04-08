@@ -1,0 +1,39 @@
+layout {
+    default_tab_template {
+        // the default zellij tab-bar and status bar plugins
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+
+    tab name="appt1" focus=true {
+        pane split_direction="vertical" {
+            pane size="50%" cwd="your-base-path/git/app"
+            pane {
+                pane size="50%" cwd="your-base-path/git/app" {
+                    command "htop"
+                }
+                pane size="50%" cwd="your-base-path/git/app"
+            }
+        }
+    }
+    
+    tab name="appt2" {
+        pane cwd="your-base-path/git/app"
+    }
+    
+    tab name="dept1" {
+        pane split_direction="vertical" {
+            pane size="50%" cwd="your-base-path/git/deployment"
+            pane size="50%" cwd="your-base-path/git/deployment"
+        }
+    }
+    
+    tab name="dept2" {
+        pane cwd="your-base-path/git/deployment"
+    }    
+}
