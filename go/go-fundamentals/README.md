@@ -15,6 +15,11 @@ This folder contains the code related to the Go fundamentals.
   - etc.
 - All of them are available in the `go` command. In many other programming languages, you have to install each tool separately.
 
+### Install Go
+
+- [Go](https://go.dev/doc/install)
+- If in Linux, download the zip and follow the instructions in the website.
+
 ### Extensions
 
 - [Go](https://marketplace.visualstudio.com/items?itemName=golang.Go)
