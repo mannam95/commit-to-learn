@@ -2,31 +2,14 @@
 
 This folder contains the code related to the Go fundamentals.
 
-## Docs
+## Documentation
 
-### Go Toolchain
+The documentation for this project is organized into separate files in the `docs` directory:
 
-- The Go toolchain is a collection of tools that are used to build, test, and run Go programs.
-- Meaning that you can use
-  - Build: `go build`
-  - Clean: `go clean`
-  - Test: `go test`
-  - Manage dependencies: `go get`
-  - etc.
-- All of them are available in the `go` command. In many other programming languages, you have to install each tool separately.
+- [Go Toolchain](docs/00-toolchain.md) - Information about the Go toolchain
+- [Installation](docs/01-installation.md) - How to install Go and setup your environment
+- [Data Types](docs/02-data-types.md) - Overview of data types in Go
+- [Variables](docs/03-variables.md) - Details about variables in Go
+- [Constants](docs/04-constants.md) - Information about constants in Go
 
-### Install Go
-
-- [Go](https://go.dev/doc/install)
-- If in Linux, download the zip and follow the instructions in the website.
-
-### Extensions
-
-- [Go](https://marketplace.visualstudio.com/items?itemName=golang.Go)
-
-### Go Vs Code Libraries
-
-- Press `Ctrl + Shift + P` and type `Go: Install/Update Tools`
-- Select all the tools you want to install
-- Press `Enter`
-- Restart VS Code
+For more information about Go, please check the [official documentation](https://golang.org/doc/).
