@@ -50,3 +50,8 @@
   var a = 10 // initialization with type inference
   a := 10 // short declaration
   ```
+- Multiple variables can be declared in a single statement.
+- For example, see below:
+  ```go
+  var a, b, c int = 1, 2, 3
+  ```
