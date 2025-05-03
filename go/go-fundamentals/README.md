@@ -12,5 +12,6 @@ The documentation for this project is organized into separate files in the `docs
 - [Variables](docs/03-variables.md) - Details about variables in Go
 - [Constants](docs/04-constants.md) - Information about constants in Go
 - [Pointers](docs/06-pointers.md) - Information about pointers in Go
+- [Loops](docs/06-loops.md) - Information about loops in Go
 
 For more information about Go, please check the [official documentation](https://golang.org/doc/).
