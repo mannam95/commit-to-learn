@@ -13,5 +13,5 @@ The documentation for this project is organized into separate files in the `docs
 - [Constants](docs/02c-constants.md) - Information about constants in Go
 - [Pointers](docs/02d-pointers.md) - Information about pointers in Go
 - [Loops](docs/03-loops.md) - Information about loops in Go
-
-For more information about Go, please check the [official documentation](https://golang.org/doc/).
+- [Branching](docs/04-branching.md) - Information about branching in Go
+  For more information about Go, please check the [official documentation](https://golang.org/doc/).
