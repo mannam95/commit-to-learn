@@ -8,10 +8,10 @@ The documentation for this project is organized into separate files in the `docs
 
 - [Go Toolchain](docs/00-toolchain.md) - Information about the Go toolchain
 - [Installation](docs/01-installation.md) - How to install Go and setup your environment
-- [Data Types](docs/02-data-types.md) - Overview of data types in Go
-- [Variables](docs/03-variables.md) - Details about variables in Go
-- [Constants](docs/04-constants.md) - Information about constants in Go
-- [Pointers](docs/06-pointers.md) - Information about pointers in Go
-- [Loops](docs/06-loops.md) - Information about loops in Go
+- [Data Types](docs/02a-data-types.md) - Overview of data types in Go
+- [Variables](docs/02b-variables.md) - Details about variables in Go
+- [Constants](docs/02c-constants.md) - Information about constants in Go
+- [Pointers](docs/02d-pointers.md) - Information about pointers in Go
+- [Loops](docs/03-loops.md) - Information about loops in Go
 
 For more information about Go, please check the [official documentation](https://golang.org/doc/).
