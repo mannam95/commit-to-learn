@@ -1,0 +1,11 @@
+Coffee
+Tea
+Water
+Soda
+Beer
+
+Hot Tea
+Chai Tea
+Chai Latte
+
+Hot Chocolate
