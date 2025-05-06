@@ -1,0 +1,7 @@
+services:
+  azure-agent:
+    environment:
+      AZP_URL: https://dev.azure.com/YOUR_ORG
+      AZP_TOKEN: your_personal_access_token
+      AZP_POOL: Default | pool_name
+      AZP_AGENT_NAME: agent_name
