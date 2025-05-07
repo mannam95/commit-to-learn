@@ -1,0 +1,12 @@
+services:
+  azure-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: azure-agent-con
+    restart: always
+    volumes:
+      - agent_work:/home/agentuser/myagent/_work
+
+volumes:
+  agent_work:
