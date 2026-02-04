@@ -1,0 +1,12 @@
+{
+  "editor.formatOnSave": true,
+  "makefile.configureOnOpen": false,
+  "workbench.activityBar.orientation": "vertical",
+  "workbench.sideBar.location": "left",
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.colorCustomizations": {
+    "tab.activeBorder": "#ff0000",
+    "tab.unfocusedActiveBorder": "#000000"
+  }
+}
