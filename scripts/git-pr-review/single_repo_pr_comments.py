@@ -2,19 +2,13 @@ import json
 import subprocess
 import sys
 
-# PRE-REQS:
-# - gh CLI installed
-# - gh CLI authenticated
-# - gh extension install agynio/gh-pr-review
-#   (https://github.com/agynio/gh-pr-review)
-
 # =====================
 # CONFIGURATION
 # =====================
-OWNER = "myorg"     # change if needed
-REPO = "myrepo"     # change if needed
-PR_NUMBER = 1       # change if needed
-REVIEWER = "myusername"     # change if needed
+OWNER = "myorg"
+REPO = "myrepo"
+PR_NUMBER = 1
+REVIEWER = "myusername"
 # =====================
 
 
