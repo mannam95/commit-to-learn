@@ -1,81 +1,69 @@
-import json
-import subprocess
+import argparse
+import os
 import sys
 
+from pr_utils import (
+    copy_to_clipboard,
+    fetch_issues_for_repo,
+    format_issues_by_repo,
+    load_dotenv,
+)
+
 # =====================
-# CONFIGURATION
+# CONFIGURATION (see .env / .env.example, SINGLE_REPO_* keys)
 # =====================
-OWNER = "myorg"
-REPO = "myrepo"
-PR_NUMBER = 1
-REVIEWER = "myusername"
+load_dotenv()
+
+OWNER = os.environ["SINGLE_REPO_OWNER"]
+REPO = os.environ["SINGLE_REPO_NAME"]
+PR_NUMBER = int(os.environ["SINGLE_REPO_PR_NUMBER"])
+REVIEWER = os.environ["SINGLE_REPO_REVIEWER"]
 # =====================
-
-
-def run_cmd(cmd):
-    result = subprocess.run(
-        cmd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True
-    )
-    if result.returncode != 0:
-        print("Command failed:")
-        print(result.stderr)
-        sys.exit(1)
-
-    return json.loads(result.stdout)
-
-
-def fetch_review_data():
-    return run_cmd([
-        "gh", "pr-review", "review", "view",
-        str(PR_NUMBER),
-        "--repo", f"{OWNER}/{REPO}",
-    ])
-
-
-def extract_issues(data):
-    issues = []
-    pr_url = f"https://github.com/{OWNER}/{REPO}/pull/{PR_NUMBER}"
-
-    for review in data.get("reviews", []):
-        for comment in review.get("comments", []):
-            if comment.get("author_login") != REVIEWER:
-                continue
-
-            # First reply by someone else (usually PR author)
-            response = None
-            for reply in comment.get("thread_comments", []):
-                if reply.get("author_login") != REVIEWER:
-                    response = reply.get("body")
-                    break
-
-            issues.append({
-                "comment": comment.get("body", ""),
-                "filename": comment.get("path", "N/A"),
-                "issue": pr_url,
-                "response": response
-            })
-
-    return issues
-
-
-def print_issues(issues):
-    for idx, issue in enumerate(issues, start=1):
-        print(f"issue{idx}")
-        print("comment:")
-        print(issue["comment"])
-        print()
-        print("filename:")
-        print(issue["filename"])
-        print()
-        print("response/reply if any:")
-        print(issue["response"] or "No response")
-        print("\n" + "=" * 50 + "\n")
 
 
 if __name__ == "__main__":
-    data = fetch_review_data()
-    issues = extract_issues(data)
-    print_issues(issues)
+    parser = argparse.ArgumentParser(
+        description="Fetch PR review comments for a single repo/PR."
+    )
+    parser.add_argument(
+        "--hide-resolved",
+        action="store_true",
+        help="Hide comments whose threads are marked as resolved.",
+    )
+    parser.add_argument(
+        "--show-suggestions",
+        action="store_true",
+        help="Include Copilot's suppressed comments and show any genuine"
+             " GitHub suggested-code blocks.",
+    )
+    parser.add_argument(
+        "--copy",
+        action="store_true",
+        help="Copy full output to clipboard",
+    )
+    args = parser.parse_args()
+
+    try:
+        issues = fetch_issues_for_repo(
+            OWNER, REPO, PR_NUMBER, REVIEWER,
+            hide_resolved=args.hide_resolved,
+            include_suppressed=args.show_suggestions)
+    except Exception as e:
+        print(f"Error fetching {OWNER}/{REPO} PR #{PR_NUMBER}: {e}",
+              file=sys.stderr)
+        issues = []
+
+    output = format_issues_by_repo(
+        {(REPO, PR_NUMBER): issues}, show_suggestions=args.show_suggestions)
+    print(output)
+
+    if args.copy:
+        if copy_to_clipboard(output):
+            print("\n(Copied to clipboard.)", file=sys.stderr)
+        else:
+            print(
+                "\n(Copy failed: on Linux install wl-copy (Wayland) or"
+                " xclip (X11), e.g. apt install wl-clipboard or"
+                " apt install xclip)",
+                file=sys.stderr,
+            )
